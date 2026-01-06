@@ -306,6 +306,54 @@ Search Result Section
     margin-top: 12px
 }
 
+
+/* 
+
+
+Pagination
+
+
+*/
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 40px 0;
+  padding: 20px;
+}
+
+.pagination__btn {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.pagination__btn:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+.pagination__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination__btn--active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination__dots {
+  padding: 0 8px;
+}
+
+
+
 /* 
 
 Small phones, tablets, and small computers

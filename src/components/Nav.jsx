@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import movieLogo from "../Assets/movie__logo.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
-const Nav = ({ setMovies, searchTerm, setSearchTerm }) => {
+const Nav = ({ setMovies, searchTerm, setSearchTerm, currentPage, setCurrentPage, setTotalResults }) => {
+  const navigate = useNavigate();
   function Header() {
     const location = useLocation();
     const pageClass = location.pathname;
@@ -33,12 +34,41 @@ const Nav = ({ setMovies, searchTerm, setSearchTerm }) => {
     document.body.classList.remove("menu__open");
   }
 
-  async function onSearchClick() {
+  async function onSearchClick(page) {
     const { data } = await axios.get(
-      `https://www.omdbapi.com/?i=tt3896198&apikey=e56ee402&s=${searchTerm}`
+      `https://www.omdbapi.com/?i=tt3896198&apikey=e56ee402&s=${searchTerm}&page=${page}`
     );
-    setMovies(data.Search);
+    if(data.Response === 'True'){
+      setMovies(data.Search);
+      setTotalResults(parseInt(data.totalResults))
+    }
+    else {
+      setMovies([])
+      setTotalResults(0)
+    }
+    
     console.log(data);
+    navigate("/s");
+  }
+
+  useEffect(() => {
+    if(searchTerm) {
+      onSearchClick(currentPage)
+    }
+  }, [currentPage])
+
+  useEffect(() => {
+    onSearchClick()
+  }, [])
+
+  function onSearch() {
+    onSearchClick(searchTerm)
+  }
+
+  function onSearchKeyPress(key) {
+    if(key === 'Enter'){
+      onSearch()
+    }
   }
 
   return (
@@ -94,7 +124,7 @@ const Nav = ({ setMovies, searchTerm, setSearchTerm }) => {
               placeholder="Search by Name, Year, or Keyword"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-            ></input>
+            onKeyDown={(event) => {onSearchKeyPress(event.key)}}></input>
             <button className="search__button" onClick={() => onSearchClick()}>
               <FontAwesomeIcon icon={"magnifying-glass"} />
             </button>
