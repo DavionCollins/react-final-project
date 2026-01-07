@@ -4,25 +4,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
-const Nav = ({ setMovies, searchTerm, setSearchTerm, currentPage, setCurrentPage, setTotalResults }) => {
+const Nav = ({
+  setMovies,
+  searchTerm,
+  setSearchTerm,
+  currentPage,
+  setCurrentPage,
+  setTotalResults,
+}) => {
   const navigate = useNavigate();
   function Header() {
     const location = useLocation();
     const pageClass = location.pathname;
 
-    let heading;
+    let heading = "";
 
     if (location.pathname === "/") {
       heading = (
         <span className={`heading heading-${pageClass}`}>
-          America's most awared movie platform
+          America's most awarded movie platform
         </span>
       );
     } else if (location.pathname === "/s") {
       heading = `Browse our Movies`;
+    } else if (location.pathname.startsWith(`/movie/`)) {
+      heading = "Movie Details";
     } else {
       heading = `Page not found`;
     }
+
     return heading;
   }
 
@@ -38,36 +48,34 @@ const Nav = ({ setMovies, searchTerm, setSearchTerm, currentPage, setCurrentPage
     const { data } = await axios.get(
       `https://www.omdbapi.com/?i=tt3896198&apikey=e56ee402&s=${searchTerm}&page=${page}`
     );
-    if(data.Response === 'True'){
+    if (data.Response === "True") {
       setMovies(data.Search);
-      setTotalResults(parseInt(data.totalResults))
+      setTotalResults(parseInt(data.totalResults));
+    } else {
+      setMovies([]);
+      setTotalResults(0);
     }
-    else {
-      setMovies([])
-      setTotalResults(0)
-    }
-    
-    console.log(data);
+
     navigate("/s");
   }
 
   useEffect(() => {
-    if(searchTerm) {
-      onSearchClick(currentPage)
+    if (searchTerm) {
+      onSearchClick(currentPage);
     }
-  }, [currentPage])
+  }, [currentPage]);
 
   useEffect(() => {
-    onSearchClick()
-  }, [])
+    onSearchClick();
+  }, []);
 
   function onSearch() {
-    onSearchClick(searchTerm)
+    onSearchClick(searchTerm);
   }
 
   function onSearchKeyPress(key) {
-    if(key === 'Enter'){
-      onSearch()
+    if (key === "Enter") {
+      onSearch();
     }
   }
 
@@ -124,7 +132,10 @@ const Nav = ({ setMovies, searchTerm, setSearchTerm, currentPage, setCurrentPage
               placeholder="Search by Name, Year, or Keyword"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={(event) => {onSearchKeyPress(event.key)}}></input>
+              onKeyDown={(event) => {
+                onSearchKeyPress(event.key);
+              }}
+            ></input>
             <button className="search__button" onClick={() => onSearchClick()}>
               <FontAwesomeIcon icon={"magnifying-glass"} />
             </button>

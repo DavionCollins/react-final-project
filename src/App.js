@@ -4,13 +4,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Search from "./pages/Search";
 import Nav from "./components/Nav";
 import { useState } from "react";
+import MovieSum from "./components/MovieSum";
+import axios from "axios";
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
-  const [poster, setPoster] = useState(true);
+
 
   return (
     <Router>
@@ -37,6 +39,7 @@ function App() {
               />
             }
           />
+          <Route path="/movie/:id" element={<MovieSum />} />
         </Routes>
       </div>
     </Router>
@@ -44,6 +47,3 @@ function App() {
 }
 
 export default App;
-
-// Implement Page change for movie search
-// https://claude.ai/chat/7804fe99-e21e-4488-b690-2becc8850a22

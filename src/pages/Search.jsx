@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import noLogo from '../Assets/noPoster.png'
+import { Link } from "react-router-dom";
 
 const Search = ({
   movies,
@@ -89,7 +90,9 @@ const Search = ({
               {sortedMovies && sortedMovies.length > 0 ? (
                 sortedMovies.map((movie) => (
                   <div className="movie" key={movie.imdbID}>
+                    <Link to={`/movie/${movie.imdbID}`}>
                     <img src={movie.Poster && movie.Poster !== "N/A" ? movie.Poster : noLogo} alt={movie.Title} />
+                    </Link>
                     <h3>{movie.Title}</h3>
                     <p>{movie.Year}</p>
                   </div>
