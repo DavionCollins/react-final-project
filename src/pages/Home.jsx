@@ -24,16 +24,18 @@ const Home = () => {
           <h2>Featured Movies</h2>
         </div>
         <div className="row">
-          <div className="movie__list">
-            {movies.map((movie) => (
-              <div className="movie">
-                <Link to={`/movie/${movie.imdbID}`}>
-                <img className="movie__poster" src={movie.Poster} />
-                </Link>
-                <h3 className="movie__title">{movie.Title}</h3>
-                <p className="movie__year">{movie.Year}</p>
-              </div>
-            )).slice(0,6)}
+          <div className="movie__list" >
+            {movies
+              .map((movie) => (
+                <div className="movie">
+                  <Link to={`/movie/${movie.imdbID}`}>
+                    <img className="movie__poster" src={movie.Poster} />
+                  </Link>
+                  <h3 className="movie__title">{movie.Title}</h3>
+                  <p className="movie__year">{movie.Year}</p>
+                </div>
+              ))
+              .slice(0, 6)}
             ;
           </div>
         </div>

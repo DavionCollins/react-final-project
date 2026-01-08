@@ -5,14 +5,12 @@ import Search from "./pages/Search";
 import Nav from "./components/Nav";
 import { useState } from "react";
 import MovieSum from "./components/MovieSum";
-import axios from "axios";
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
-
 
   return (
     <Router>

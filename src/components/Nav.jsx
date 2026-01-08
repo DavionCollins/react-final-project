@@ -64,10 +64,7 @@ const Nav = ({
       onSearchClick(currentPage);
     }
   }, [currentPage]);
-
-  useEffect(() => {
-    onSearchClick();
-  }, []);
+  
 
   function onSearch() {
     onSearchClick(searchTerm);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import noLogo from '../Assets/noPoster.png'
+import noLogo from "../Assets/noPoster.png";
 import { Link } from "react-router-dom";
 
 const Search = ({
@@ -91,7 +91,14 @@ const Search = ({
                 sortedMovies.map((movie) => (
                   <div className="movie" key={movie.imdbID}>
                     <Link to={`/movie/${movie.imdbID}`}>
-                    <img src={movie.Poster && movie.Poster !== "N/A" ? movie.Poster : noLogo} alt={movie.Title} />
+                      <img
+                        src={
+                          movie.Poster && movie.Poster !== "N/A"
+                            ? movie.Poster
+                            : noLogo
+                        }
+                        alt={movie.Title}
+                      />
                     </Link>
                     <h3>{movie.Title}</h3>
                     <p>{movie.Year}</p>
@@ -142,7 +149,9 @@ const Search = ({
               <button
                 className="pagination__btn"
                 onClick={() => goToPage(totalPages)}
-              >{totalPages}</button>
+              >
+                {totalPages}
+              </button>
             </>
           )}
           <button
